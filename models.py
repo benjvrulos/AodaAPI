@@ -15,3 +15,5 @@ class Derivation(Base):
     comuna = Column(String)
     region = Column(String)
     created_at = Column(DateTime, default=datetime.now(timezone.utc))
+
+   

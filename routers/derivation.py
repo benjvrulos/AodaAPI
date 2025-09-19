@@ -25,7 +25,7 @@ def get_db():
 db_dependency = Annotated[Session,Depends(get_db)]
 
 
-
+# Pydantic model for request validation
 class DerivationRequest(BaseModel):
     type: str = Field(min_length=3, max_length=50)
     description: str = Field(min_length=3, max_length=100)
@@ -36,14 +36,14 @@ class DerivationRequest(BaseModel):
     comuna:str = Field(min_length=3, max_length=50)
     region:str = Field(min_length=3, max_length=50)
      
-
-
-
+     
 # Endpoint to read all derivations
 @router.get('/',status_code=status.HTTP_200_OK)
 def read_all(db: db_dependency):
     return db.query(Derivation).all()
 
+
+# Endpoint to create a new derivation
 @router.post('/create',status_code=status.HTTP_201_CREATED)
 def create_derivation(derivation: DerivationRequest, db: db_dependency):
     new_derivation = Derivation(**derivation.model_dump())
